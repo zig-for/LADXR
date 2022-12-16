@@ -3,54 +3,54 @@ import importlib.util
 import importlib.machinery
 import os
 
-from romTables import ROMWithTables
-import assembler
-import mapgen
-import patches.overworld
-import patches.dungeon
-import patches.entrances
-import patches.enemies
-import patches.titleScreen
-import patches.aesthetics
-import patches.music
-import patches.core
-import patches.phone
-import patches.photographer
-import patches.owl
-import patches.bank3e
-import patches.bank3f
-import patches.inventory
-import patches.witch
-import patches.tarin
-import patches.fishingMinigame
-import patches.softlock
-import patches.maptweaks
-import patches.chest
-import patches.bomb
-import patches.rooster
-import patches.shop
-import patches.trendy
-import patches.goal
-import patches.hardMode
-import patches.weapons
-import patches.health
-import patches.heartPiece
-import patches.droppedKey
-import patches.goldenLeaf
-import patches.songs
-import patches.bowwow
-import patches.desert
-import patches.reduceRNG
-import patches.madBatter
-import patches.tunicFairy
-import patches.seashell
-import patches.instrument
-import patches.endscreen
-import patches.save
-import patches.bingo
-import patches.multiworld
-import patches.tradeSequence
-import hints
+from .romTables import ROMWithTables
+from . import assembler
+from . import mapgen
+from .patches import overworld
+from .patches import dungeon
+from .patches import entrances
+from .patches import enemies
+from .patches import titleScreen
+from .patches import aesthetics
+from .patches import music
+from .patches import core
+from .patches import phone
+from .patches import photographer
+from .patches import owl
+from .patches import bank3e
+from .patches import bank3f
+from .patches import inventory
+from .patches import witch
+from .patches import tarin
+from .patches import fishingMinigame
+from .patches import softlock
+from .patches import maptweaks
+from .patches import chest
+from .patches import bomb
+from .patches import rooster
+from .patches import shop
+from .patches import trendy
+from .patches import goal
+from .patches import hardMode
+from .patches import weapons
+from .patches import health
+from .patches import heartPiece
+from .patches import droppedKey
+from .patches import goldenLeaf
+from .patches import songs
+from .patches import bowwow
+from .patches import desert
+from .patches import reduceRNG
+from .patches import madBatter
+from .patches import tunicFairy
+from .patches import seashell
+from .patches import instrument
+from .patches import endscreen
+from .patches import save
+from .patches import bingo
+from .patches import multiworld
+from .patches import tradeSequence
+from . import hints
 
 
 # Function to generate a final rom, this patches the rom with all required patches

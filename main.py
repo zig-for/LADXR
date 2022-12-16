@@ -8,10 +8,7 @@ import argparse
 from settings import Settings
 from typing import Optional, List
 
-
-
-def main(mainargs: Optional[List[str]] = None) -> None:
-    import sys
+def get_parser():
 
     parser = argparse.ArgumentParser(description='Randomize!')
     parser.add_argument('input_filename', metavar='input rom', type=str,
@@ -52,7 +49,12 @@ def main(mainargs: Optional[List[str]] = None) -> None:
         help="Warning, bugged in various ways")
     parser.add_argument('--pymod', dest="pymod", action='append',
         help="Load python code mods.")
+    return parser
 
+def main(mainargs: Optional[List[str]] = None) -> None:
+    import sys
+
+    parser = get_parser()
     settings = Settings()
     args = parser.parse_args(mainargs)
     if args.settingjson:

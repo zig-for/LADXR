@@ -1,5 +1,5 @@
-from assembler import ASM
-from utils import formatText
+from ..assembler import ASM
+from ..utils import formatText
 from ..locations.constants import CHEST_ITEMS
 
 
