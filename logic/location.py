@@ -4,7 +4,8 @@ from ..locations.itemInfo import ItemInfo
 
 
 class Location:
-    def __init__(self, dungeon=None):
+    def __init__(self, name=None, dungeon=None):
+        self.name = name
         self.items = []  # type: typing.List[ItemInfo]
         self.dungeon = dungeon
         self.__connected_to = set()
