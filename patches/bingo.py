@@ -1,8 +1,8 @@
-from backgroundEditor import BackgroundEditor
-from roomEditor import RoomEditor, ObjectWarp
-from assembler import ASM
-from locations.constants import *
-from utils import formatText
+from ..backgroundEditor import BackgroundEditor
+from ..roomEditor import RoomEditor, ObjectWarp
+from ..assembler import ASM
+from ..locations.constants import *
+from ..utils import formatText
 
 # Few unused rooms that we can use the room status variables for to store data.
 UNUSED_ROOMS = [0x15D, 0x17E, 0x17F, 0x1AD]

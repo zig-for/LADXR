@@ -4,7 +4,7 @@ import logic
 import explorer
 import patches.witch
 from settings import Settings
-from worldSetup import WorldSetup
+from ..worldSetup import WorldSetup
 
 
 class RaceRomException(Exception):

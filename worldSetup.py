@@ -1,7 +1,7 @@
-import patches.enemies
-from locations.items import *
-from entranceInfo import ENTRANCE_INFO
-from patches import bingo
+from .patches import enemies, bingo
+from .locations.items import *
+from .entranceInfo import ENTRANCE_INFO
+
 
 
 MULTI_CHEST_OPTIONS = [MAGIC_POWDER, BOMB, MEDICINE, RUPEES_50, RUPEES_20, RUPEES_100, RUPEES_200, RUPEES_500, SEASHELL, GEL, ARROWS_10, SINGLE_ARROW]

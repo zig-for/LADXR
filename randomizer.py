@@ -9,13 +9,13 @@ from typing import Optional, List, Dict, Tuple
 import explorer
 import locations.itemInfo
 import logic
-from locations.items import *
+from ..locations.items import *
 import generator
 import spoilerLog
 import itempool
 import mapgen
 from plan import Plan
-from worldSetup import WorldSetup
+from ..worldSetup import WorldSetup
 from settings import Settings
 
 

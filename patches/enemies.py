@@ -1,6 +1,6 @@
-from roomEditor import RoomEditor, Object, ObjectWarp, ObjectHorizontal
-from assembler import ASM
-from locations import constants
+from ..roomEditor import RoomEditor, Object, ObjectWarp, ObjectHorizontal
+from ..assembler import ASM
+from ..locations import constants
 from typing import List
 
 

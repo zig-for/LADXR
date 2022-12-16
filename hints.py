@@ -1,4 +1,4 @@
-from locations.items import *
+from ..locations.items import *
 from utils import formatText
 
 
