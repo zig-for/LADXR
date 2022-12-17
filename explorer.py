@@ -1,6 +1,6 @@
-from logic import AND, OR, COUNT, FOUND
-from logic.requirements import isConsumable
-from checkMetadata import checkMetadataTable
+from .logic import AND, OR, COUNT, FOUND
+from .logic.requirements import isConsumable
+from .checkMetadata import checkMetadataTable
 
 
 class Explorer:

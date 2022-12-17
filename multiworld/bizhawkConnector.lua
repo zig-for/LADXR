@@ -4,7 +4,7 @@ local poll_counter = 0
 local connection_state = nil
 
 -- Connector version
-VERSION = 0x01
+VERSION = 0x00
 
 -- Memory locations of LADXR
 ROMGameID = 0x0051 -- 4 bytes
@@ -145,42 +145,54 @@ if bit == nil then
         lshift=function(a, b) return a << b end,
     }]])()
 end
-print("Start")
+print("Start!")
+
+function log(s)
+    print(s)
+    drawtext(s)
+end
 
 function stateInitialize()
     local gameplayType = memread(wGameplayType)
     if gameplayType <= 6 then
-        drawtext("Waiting for savegame")
+        log("Waiting for savegame")
         return
     end
     if gameplayType > 0x1A then
-        print(string.format("Unknown gameplay type? %02x", gameplayType))
+        log(string.format("Unknown gameplay type? %02x", gameplayType))
         return
     end
     local version = memread(ROMConnectorVersion)
     if version ~= VERSION then
-        drawtext(string.format("Wrong ROM/Connector version: %02x != %02x", version, VERSION))
+        log(string.format("Wrong ROM/Connector version: %02x != %02x", version, VERSION))
         return
     end
+    log("hmmm")
 
-    drawtext("Connecting...")
+    log("Connecting...")
     connection_state = stateTryToConnect
 end
-
+function sleep(sec)
+    socket.select(nil, nil, sec)
+end
 function stateTryToConnect()
-    if socket == nil then
-        print("Creating socket")
-        socket = socketlib.tcp()
-        socket:settimeout(5)
-    end
-    local ret, err = socket:connect("daid.eu", 32032)
+    socket = assert(require("socket"))
+    sleep(1)
+    local server = socket.tcp()
+    ret, err = server:bind('*', 55362)
+    -- server:listen(32)
+    
+    print("Server started.");
+    
+    -- local tcp = assert(socket.tcp())
+        
     if ret ~= 1 then
-        print("Connection failed: " .. err)
+        log("Connection failed: " .. err)
         connection_state = stateError
     else
         socket:settimeout(0)
         sendAll(string.char(0x21, VERSION, memread(ROMGameID), memread(ROMGameID + 1), memread(ROMGameID + 2), memread(ROMGameID + 3), memread(ROMWorldID)))
-        print(string.format("Connected as game: %02x%02x%02x%02x:%02x", memread(ROMGameID), memread(ROMGameID + 1), memread(ROMGameID + 2), memread(ROMGameID + 3), memread(ROMWorldID)))
+        log(string.format("Connected as game: %02x%02x%02x%02x:%02x", memread(ROMGameID), memread(ROMGameID + 1), memread(ROMGameID + 2), memread(ROMGameID + 3), memread(ROMWorldID)))
         connection_state = stateIdle
     end
 end
@@ -207,7 +219,7 @@ function stateIdle()
         local target = memread(wLinkSendItemTarget)
         local item = memread(wLinkSendItemItem)
         sendAll(string.char(0x10, room_h, room_l, target, item))
-        print(string.format("Sending item: %01x%02x:%02x to %d", room_h, room_l, item, target))
+        log(string.format("Sending item: %01x%02x:%02x to %d", room_h, room_l, item, target))
         --TODO: We should wait till we have a confirm from the server that the item is handled by the server
         memwriteAND(wLinkStatusBits, 0xFD)
     end

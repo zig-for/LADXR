@@ -6,50 +6,51 @@ import os
 from .romTables import ROMWithTables
 from . import assembler
 from . import mapgen
-from .patches import overworld
-from .patches import dungeon
-from .patches import entrances
-from .patches import enemies
-from .patches import titleScreen
-from .patches import aesthetics
-from .patches import music
-from .patches import core
-from .patches import phone
-from .patches import photographer
-from .patches import owl
-from .patches import bank3e
-from .patches import bank3f
-from .patches import inventory
-from .patches import witch
-from .patches import tarin
-from .patches import fishingMinigame
-from .patches import softlock
-from .patches import maptweaks
-from .patches import chest
-from .patches import bomb
-from .patches import rooster
-from .patches import shop
-from .patches import trendy
-from .patches import goal
-from .patches import hardMode
-from .patches import weapons
-from .patches import health
-from .patches import heartPiece
-from .patches import droppedKey
-from .patches import goldenLeaf
-from .patches import songs
-from .patches import bowwow
-from .patches import desert
-from .patches import reduceRNG
-from .patches import madBatter
-from .patches import tunicFairy
-from .patches import seashell
-from .patches import instrument
-from .patches import endscreen
-from .patches import save
-from .patches import bingo
-from .patches import multiworld
-from .patches import tradeSequence
+from . import patches
+from .patches import overworld as _
+from .patches import dungeon as _
+from .patches import entrances as _
+from .patches import enemies as _
+from .patches import titleScreen as _
+from .patches import aesthetics as _
+from .patches import music as _
+from .patches import core as _
+from .patches import phone as _
+from .patches import photographer as _
+from .patches import owl as _
+from .patches import bank3e as _
+from .patches import bank3f as _
+from .patches import inventory as _
+from .patches import witch as _
+from .patches import tarin as _
+from .patches import fishingMinigame as _
+from .patches import softlock as _
+from .patches import maptweaks as _
+from .patches import chest as _
+from .patches import bomb as _
+from .patches import rooster as _
+from .patches import shop as _
+from .patches import trendy as _
+from .patches import goal as _
+from .patches import hardMode as _
+from .patches import weapons as _
+from .patches import health as _
+from .patches import heartPiece as _
+from .patches import droppedKey as _
+from .patches import goldenLeaf as _
+from .patches import songs as _
+from .patches import bowwow as _
+from .patches import desert as _
+from .patches import reduceRNG as _
+from .patches import madBatter as _
+from .patches import tunicFairy as _
+from .patches import seashell as _
+from .patches import instrument as _
+from .patches import endscreen as _
+from .patches import save as _
+from .patches import bingo as _
+from .patches import multiworld as _
+from .patches import tradeSequence as _
 from . import hints
 
 
@@ -221,6 +222,8 @@ def generateRom(args, settings, seed, logic, *, rnd=None, multiworld=None):
         patches.core.quickswap(rom, 1)
     elif settings.quickswap == 'b':
         patches.core.quickswap(rom, 0)
+    
+    rom.patch(0x00, 0x0056, "00", "01") # Set the Bizhawk connector version.
 
     if multiworld is None:
         hints.addHints(rom, rnd, logic.iteminfo_list)
@@ -234,7 +237,6 @@ def generateRom(args, settings, seed, logic, *, rnd=None, multiworld=None):
         for n in range(4):
             rom.patch(0x00, 0x0051 + n, "00", "%02x" % (seed[n]))
         rom.patch(0x00, 0x0055, "00", "%02x" % (multiworld))
-        rom.patch(0x00, 0x0056, "00", "01") # Set the Bizhawk connector version.
 
         world_setup = logic.worlds[multiworld].world_setup
         item_list = [spot for spot in logic.iteminfo_list if spot.world == multiworld]

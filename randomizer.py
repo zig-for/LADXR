@@ -6,17 +6,20 @@ import binascii
 from datetime import datetime
 from typing import Optional, List, Dict, Tuple
 
-import explorer
-import locations.itemInfo
-import logic
-from ..locations.items import *
-import generator
-import spoilerLog
-import itempool
-import mapgen
-from plan import Plan
-from ..worldSetup import WorldSetup
-from settings import Settings
+
+from . import explorer
+#from .locations import itemInfo as itemInfo
+#from .itemInfo import ItemInfo as itemInfo.ItemInfo
+from .locations import itemInfo
+from . import logic
+from .locations.items import *
+from . import generator
+from . import spoilerLog
+from . import itempool
+from . import mapgen
+from .plan import Plan
+from .worldSetup import WorldSetup
+from .settings import Settings
 
 
 class Error(Exception):
@@ -58,7 +61,6 @@ class Randomizer:
                     ii.OPTIONS = item
                 elif item is not None:
                     ii.forced_item = item
-
         if settings.multiworld:
             item_placer = MultiworldItemPlacer(self.__logic, settings.forwardfactor if settings.forwardfactor > 0.0 else 0.5, settings.accessibility, settings.multiworld)
         elif settings.dungeon_items in ('', 'localkeys') or settings.forwardfactor > 0.0:
@@ -157,7 +159,7 @@ class ItemPlacer:
     def __init__(self, logic: logic.Logic, accessibility: str) -> None:
         self._logic = logic
         self._item_pool: Dict[str, int] = {}
-        self._spots: List[locations.itemInfo.ItemInfo] = []
+        self._spots: List[itemInfo.ItemInfo] = []
         self._accessibility: str = accessibility
 
     def addItem(self, item: str, count: int = 1) -> None:
@@ -168,10 +170,10 @@ class ItemPlacer:
         if self._item_pool[item] == 0:
             del self._item_pool[item]
 
-    def addSpot(self, spot: locations.itemInfo.ItemInfo) -> None:
+    def addSpot(self, spot: itemInfo.ItemInfo) -> None:
         self._spots.append(spot)
 
-    def removeSpot(self, spot: locations.itemInfo.ItemInfo) -> None:
+    def removeSpot(self, spot: itemInfo.ItemInfo) -> None:
         self._spots.remove(spot)
 
     def run(self, rnd: random.Random) -> None:
@@ -189,7 +191,7 @@ class ItemPlacer:
     def canStillPlaceItemPool(self) -> bool:
         item_pool = self._item_pool.copy()
         spots = self._spots.copy()
-        def scoreSpot(s: locations.itemInfo.ItemInfo) -> Tuple[int, str]:
+        def scoreSpot(s: itemInfo.ItemInfo) -> Tuple[int, str]:
             if s.location.dungeon:
                 return 0, s.nameId
             return len(s.getOptions()), s.nameId

@@ -1,11 +1,11 @@
 import binascii
-from romTables import ROMWithTables
+from .romTables import ROMWithTables
 import json
-import randomizer
-import logic
-import spoilerLog
+from . import randomizer
+from . import logic
+from . import spoilerLog
 import argparse
-from settings import Settings
+from .settings import Settings
 from typing import Optional, List
 
 def get_parser():
@@ -49,6 +49,7 @@ def get_parser():
         help="Warning, bugged in various ways")
     parser.add_argument('--pymod', dest="pymod", action='append',
         help="Load python code mods.")
+
     return parser
 
 def main(mainargs: Optional[List[str]] = None) -> None:

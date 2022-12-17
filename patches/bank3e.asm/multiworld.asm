@@ -53,6 +53,11 @@ MainLoop:
     bit  0, [hl]
     ret  z
 
+    ; Increment item counter for AP
+    ; ld   a, [$DB56]
+    ; add  a, $31
+    ; ld   [$DB56], a
+
     ; Give an item to the player
     ld   a, [wLinkGiveItem]
     cp   $22 ; zol item
