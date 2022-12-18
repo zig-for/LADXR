@@ -257,7 +257,10 @@ def generateRom(args, settings, seed, logic, *, rnd=None, multiworld=None):
     for spot in item_list:
         if spot.item and spot.item.startswith("*"):
             spot.item = spot.item[1:]
-        spot.patch(rom, spot.item)
+        mw = None
+        if spot.item_owner != spot.location_owner:
+            mw = spot.item_owner
+        spot.patch(rom, spot.item, multiworld=mw)
     patches.enemies.changeBosses(rom, world_setup.boss_mapping)
     patches.enemies.changeMiniBosses(rom, world_setup.miniboss_mapping)
 

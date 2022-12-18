@@ -53,11 +53,6 @@ MainLoop:
     bit  0, [hl]
     ret  z
 
-    ; Increment item counter for AP
-    ; ld   a, [$DB56]
-    ; add  a, $31
-    ; ld   [$DB56], a
-
     ; Give an item to the player
     ld   a, [wLinkGiveItem]
     cp   $22 ; zol item
@@ -70,7 +65,7 @@ MainLoop:
     call MessageAddFromPlayer
     dec  de
     ld   a, [wLinkGiveItemFrom]
-    add  a, $31 ; '1'
+    add  a, $30 ; '0'
     ld   [de], a
     ld   a, $C9
     ld   hl, wLinkStatusBits
