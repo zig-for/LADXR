@@ -268,7 +268,7 @@ def generateRom(args, settings, seed, logic, *, rnd=None, multiworld=None):
         patches.core.addFrameCounter(rom, len(item_list))
 
     patches.core.warpHome(rom)  # Needs to be done after setting the start location.
-    patches.titleScreen.setRomInfo(rom, binascii.hexlify(seed).decode("ascii").upper(), settings)
+    # patches.titleScreen.setRomInfo(rom, binascii.hexlify("seed").decode("ascii").upper(), settings)
     patches.endscreen.updateEndScreen(rom)
     patches.aesthetics.updateSpriteData(rom)
     if args.doubletrouble:

@@ -618,7 +618,7 @@ class DungeonDiveOverworld:
         self.overworld_entrance = {}
         self.indoor_location = {}
 
-        start_house = Location().add(StartItem())
+        start_house = Location("Start House").add(StartItem())
         Location().add(ShopItem(0)).connect(start_house, COUNT("RUPEES", 200))
         Location().add(ShopItem(1)).connect(start_house, COUNT("RUPEES", 980))
         Location().add(Song(0x0B1)).connect(start_house, OCARINA)  # Marins song
