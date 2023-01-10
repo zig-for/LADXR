@@ -1,6 +1,6 @@
 from .droppedKey import DroppedKey
-from roomEditor import RoomEditor
-from assembler import ASM
+from ..roomEditor import RoomEditor
+from ..assembler import ASM
 
 
 class BirdKey(DroppedKey):

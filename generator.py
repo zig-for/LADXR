@@ -3,54 +3,55 @@ import importlib.util
 import importlib.machinery
 import os
 
-from romTables import ROMWithTables
-import assembler
-import mapgen
-import patches.overworld
-import patches.dungeon
-import patches.entrances
-import patches.enemies
-import patches.titleScreen
-import patches.aesthetics
-import patches.music
-import patches.core
-import patches.phone
-import patches.photographer
-import patches.owl
-import patches.bank3e
-import patches.bank3f
-import patches.inventory
-import patches.witch
-import patches.tarin
-import patches.fishingMinigame
-import patches.softlock
-import patches.maptweaks
-import patches.chest
-import patches.bomb
-import patches.rooster
-import patches.shop
-import patches.trendy
-import patches.goal
-import patches.hardMode
-import patches.weapons
-import patches.health
-import patches.heartPiece
-import patches.droppedKey
-import patches.goldenLeaf
-import patches.songs
-import patches.bowwow
-import patches.desert
-import patches.reduceRNG
-import patches.madBatter
-import patches.tunicFairy
-import patches.seashell
-import patches.instrument
-import patches.endscreen
-import patches.save
-import patches.bingo
-import patches.multiworld
-import patches.tradeSequence
-import hints
+from .romTables import ROMWithTables
+from . import assembler
+from . import mapgen
+from . import patches
+from .patches import overworld as _
+from .patches import dungeon as _
+from .patches import entrances as _
+from .patches import enemies as _
+from .patches import titleScreen as _
+from .patches import aesthetics as _
+from .patches import music as _
+from .patches import core as _
+from .patches import phone as _
+from .patches import photographer as _
+from .patches import owl as _
+from .patches import bank3e as _
+from .patches import bank3f as _
+from .patches import inventory as _
+from .patches import witch as _
+from .patches import tarin as _
+from .patches import fishingMinigame as _
+from .patches import softlock as _
+from .patches import maptweaks as _
+from .patches import chest as _
+from .patches import bomb as _
+from .patches import rooster as _
+from .patches import shop as _
+from .patches import trendy as _
+from .patches import goal as _
+from .patches import hardMode as _
+from .patches import weapons as _
+from .patches import health as _
+from .patches import heartPiece as _
+from .patches import droppedKey as _
+from .patches import goldenLeaf as _
+from .patches import songs as _
+from .patches import bowwow as _
+from .patches import desert as _
+from .patches import reduceRNG as _
+from .patches import madBatter as _
+from .patches import tunicFairy as _
+from .patches import seashell as _
+from .patches import instrument as _
+from .patches import endscreen as _
+from .patches import save as _
+from .patches import bingo as _
+from .patches import multiworld as _
+from .patches import tradeSequence as _
+from . import hints
 
 
 # Function to generate a final rom, this patches the rom with all required patches
@@ -221,6 +222,8 @@ def generateRom(args, settings, seed, logic, *, rnd=None, multiworld=None):
         patches.core.quickswap(rom, 1)
     elif settings.quickswap == 'b':
         patches.core.quickswap(rom, 0)
+    
+    rom.patch(0x00, 0x0056, "00", "01") # Set the Bizhawk connector version.
 
     if multiworld is None:
         hints.addHints(rom, rnd, logic.iteminfo_list)
@@ -234,7 +237,6 @@ def generateRom(args, settings, seed, logic, *, rnd=None, multiworld=None):
         for n in range(4):
             rom.patch(0x00, 0x0051 + n, "00", "%02x" % (seed[n]))
         rom.patch(0x00, 0x0055, "00", "%02x" % (multiworld))
-        rom.patch(0x00, 0x0056, "00", "01") # Set the Bizhawk connector version.
 
         world_setup = logic.worlds[multiworld].world_setup
         item_list = [spot for spot in logic.iteminfo_list if spot.world == multiworld]
@@ -255,7 +257,10 @@ def generateRom(args, settings, seed, logic, *, rnd=None, multiworld=None):
     for spot in item_list:
         if spot.item and spot.item.startswith("*"):
             spot.item = spot.item[1:]
-        spot.patch(rom, spot.item)
+        mw = None
+        if spot.item_owner != spot.location_owner:
+            mw = spot.item_owner
+        spot.patch(rom, spot.item, multiworld=mw)
     patches.enemies.changeBosses(rom, world_setup.boss_mapping)
     patches.enemies.changeMiniBosses(rom, world_setup.miniboss_mapping)
 
@@ -263,7 +268,7 @@ def generateRom(args, settings, seed, logic, *, rnd=None, multiworld=None):
         patches.core.addFrameCounter(rom, len(item_list))
 
     patches.core.warpHome(rom)  # Needs to be done after setting the start location.
-    patches.titleScreen.setRomInfo(rom, binascii.hexlify(seed).decode("ascii").upper(), settings)
+    # patches.titleScreen.setRomInfo(rom, binascii.hexlify("seed").decode("ascii").upper(), settings)
     patches.endscreen.updateEndScreen(rom)
     patches.aesthetics.updateSpriteData(rom)
     if args.doubletrouble:

@@ -1,7 +1,7 @@
 from .itemInfo import ItemInfo
 from .constants import *
-from utils import formatText
-from assembler import ASM
+from ..utils import formatText
+from ..assembler import ASM
 
 
 class ShopItem(ItemInfo):
@@ -21,6 +21,7 @@ class ShopItem(ItemInfo):
     def __init__(self, index):
         self.__index = index
         super().__init__(0x2A1)
+        self.local_only = True
 
     def patch(self, rom, option, *, multiworld=None):
         assert multiworld is None

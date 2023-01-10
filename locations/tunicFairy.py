@@ -19,7 +19,8 @@ class TunicFairy(ItemInfo):
     def __init__(self, index):
         self.index = index
         super().__init__(0x301)
-
+        self.local_only = True
+        
     def patch(self, rom, option, *, multiworld=None):
         assert multiworld is None
         rom.banks[0x36][0x11BF + self.index] = CHEST_ITEMS[option]

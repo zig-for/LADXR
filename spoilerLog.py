@@ -1,10 +1,10 @@
 import sys
 import json
 import logic
-import explorer
-import patches.witch
-from settings import Settings
-from worldSetup import WorldSetup
+from . import explorer
+from .patches import witch
+from .settings import Settings
+from .worldSetup import WorldSetup
 
 
 class RaceRomException(Exception):

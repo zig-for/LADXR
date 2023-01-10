@@ -79,7 +79,7 @@ class Settings:
             Setting('seed', 'Main', '<', 'Seed', placeholder='Leave empty for random seed', default="", multiworld=False,
                 description="""For multiple people to generate the same randomization result, enter the generated seed number here.
 Note, not all strings are valid seeds."""),
-            Setting('logic', 'Main', 'L', 'Logic', options=[('casual', 'c', 'Casual'), ('', '', 'Normal'), ('hard', 'h', 'Hard'), ('glitched', 'g', 'Glitched'), ('hell', 'H', 'Hell')], default='',
+            Setting('logic', 'Main', 'L', 'Logic', options=[('casual', 'c', 'Casual'), ('normal', 'n', 'Normal'), ('hard', 'h', 'Hard'), ('glitched', 'g', 'Glitched'), ('hell', 'H', 'Hell')], default='normal',
                 description="""Affects where items are allowed to be placed.
 [Casual] Same as normal, except that a few more complex options are removed, like removing bushes with powder and killing enemies with powder or bombs.
 [Normal] playable without using any tricks or glitches. Requires nothing to be done outside of normal item usage.

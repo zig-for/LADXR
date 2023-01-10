@@ -1,4 +1,4 @@
-from roomEditor import RoomEditor, Object, ObjectHorizontal
+from ..roomEditor import RoomEditor, Object, ObjectHorizontal
 
 
 KEY_DOORS = {

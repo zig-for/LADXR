@@ -65,7 +65,7 @@ MainLoop:
     call MessageAddFromPlayer
     dec  de
     ld   a, [wLinkGiveItemFrom]
-    add  a, $31 ; '1'
+    add  a, $30 ; '0'
     ld   [de], a
     ld   a, $C9
     ld   hl, wLinkStatusBits

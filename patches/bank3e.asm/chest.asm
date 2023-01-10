@@ -39,9 +39,10 @@ SendItemFromChestToOtherGameWait:
 SendItemFromChestToOtherGame:
     call IncreaseCheckCounter
 .retry:
-    ld   hl, wLinkStatusBits
-    bit  1, [hl]
-    jp   nz, SendItemFromChestToOtherGameWait
+    ; AP patch - don't wait on server
+    ; ld   hl, wLinkStatusBits
+    ; bit  1, [hl]
+    ; jp   nz, SendItemFromChestToOtherGameWait
 
     ; Store send item data
     ld   hl, $0000
@@ -766,7 +767,7 @@ ItemMessageForOtherPlayer:
     call MessageAddTargetPlayer
     dec  de
     pop  af
-    add  a, $31 ; '1'
+    add  a, $30 ; '0'
     ld   [de], a
     ld   a, $C9
     jp   $2385 ; Opendialog in $000-$0FF range
